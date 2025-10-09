@@ -8,32 +8,6 @@ public interface ITableField
     bool TrySetValue(string input, out string error); // Return true on success and false on failure. error is always required.
 }
 
-// Example
-public class IntField : ITableField
-{
-    public string Name { get; }
-    private int _value;
-    public object Value => _value;
-    public string ValueAsString => _value.ToString();
-
-    public IntField(string name, int value)
-    {
-        Name = name;
-        _value = value;
-    }
-
-    public bool TrySetValue(string input, out string error)
-    {
-        if (int.TryParse(input, out int v))
-        {
-            _value = v;
-            error = string.Empty;
-            return true;
-        }
-        error = "Ожидалось целое число";
-        return false;
-    }
-}
 // =-=-=-=-=-=-=-=--=-=--=-=-=-=-=-=-=-=-=-=--= //
 
 public class Table
