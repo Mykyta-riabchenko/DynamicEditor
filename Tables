@@ -18,4 +18,5 @@ public class Table
 
     public void AddField(ITableField field) => Fields.Add(field);
     public void RemoveField(string name) => Fields.RemoveAll(f => f.Name == name);
+    public override string? ToString(); // What user will see in menu
 }
