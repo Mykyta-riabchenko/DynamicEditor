@@ -2,6 +2,7 @@ public interface ITableField
 {
     string Name { get; } // Name of the field to show user
     object Value { get; } // if I want to get raw field data
+    object _primaryKey; // Primary key pf every field (who it belongs to)
     string ValueAsString { get; } // How field data will be shown user
 
     bool TrySetValue(string input, out string error); // Return true on success and false on failure. error is always required.
