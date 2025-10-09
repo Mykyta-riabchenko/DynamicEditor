@@ -1,38 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DynamicEditor.Models
+public interface ITableField
 {
-    public class Table
-    {
-        public string Name { get; set; }
-        public List<ITableField> Fields { get; } = new();
+    string Name { get; } // Name of the field to show user
+    object Value { get; } // if I want to get raw field data
+    string ValueAsString { get; } // How field data will be shown user
 
-        public Table(string name) => Name = name;
-
-        public void AddField(ITableField field) => Fields.Add(field);
-        public void RemoveField(string name) => Fields.RemoveAll(f => f.Name == name);
-    }
-}
-//=======
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DynamicEditor.Models
-{
-    public interface ITableField
-    {
-        string Name { get; }
-        object Value { get; }
-        string ValueAsString { get; }
-
-        bool TrySetValue(string input, out string error);
-    }
+    bool TrySetValue(string input, out string error); // Return true on success and false on failure. error is always required.
 }
 
+// =-=-=-=-=-=-=-=--=-=--=-=-=-=-=-=-=-=-=-=--= //
+
+public class Table
+{
+    public string Name { get; set; } // To sort obects
+    public List<ITableField> Fields { get; } = new(); // stores all fields
+
+    public Table(string name) => Name = name;
+
+    public void AddField(ITableField field) => Fields.Add(field);
+    public void RemoveField(string name) => Fields.RemoveAll(f => f.Name == name);
+}
