@@ -4,13 +4,12 @@ public interface ITableField
     object Value { get; } // if I want to get raw field data
     string ValueAsString { get; } // How field data will be shown user
 
-    public ITableField(object primaryKey);
     bool TrySetValue(string input, out string error); // Return true on success and false on failure. error is always required.
 }
 
 // =-=-=-=-=-=-=-=--=-=--=-=-=-=-=-=-=-=-=-=--= //
 
-public class Table
+public class TableObject
 {
     public string Name { get; set; } // To sort obects
     public List<ITableField> Fields { get; } = new(); // stores all fields
