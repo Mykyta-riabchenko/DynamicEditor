@@ -1,0 +1,63 @@
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace CourseManagement
+{
+    public class CourseListDB
+    {
+        private OracleConnection Atiwora { get; set; }
+
+        public CourseListDB()
+        {
+            try
+            {
+                Atiwora = new OracleConnection("Data Source=db-server.s-atiw.de:1521/atiwora;User ID=FS244_rklymov;Password=radomyr;");
+                Atiwora.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void TestConnection()
+        {
+            Console.WriteLine("Status: {0}", Atiwora.State);
+        }
+
+
+        public string GetDbItem(string pKeyValue, string pKeyName, string column, string table)
+        {
+            using var cmd = Atiwora.CreateCommand();
+
+            int i;
+            if (int.TryParse(pKeyValue, out i))
+            {
+                cmd.CommandText = $"SELECT {column} FROM {table} WHERE {pKeyName} = {pKeyValue}";
+            }
+            else
+            {
+                cmd.CommandText = $"SELECT {column} FROM {table} WHERE {pKeyName} = '{pKeyValue}'";
+            }
+
+            using var reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return reader[column].ToString();
+            }
+
+            return null; 
+        }
+
+    }
+}
+
+
